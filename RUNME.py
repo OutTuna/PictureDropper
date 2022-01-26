@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import logging
 
 from dcbot import bot

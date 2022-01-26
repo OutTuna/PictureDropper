@@ -1,6 +1,6 @@
 import os
-import io
 import datetime
+from traceback import print_tb
 
 import discord
 from aiogram import types
@@ -21,13 +21,14 @@ async def sender(photo):
 async def photo_sender(message: types.Message):
     if not os.path.exists(config.path): os.mkdir(config.path)
 
-    filename = datetime.datetime.strftime(datetime.datetime.now(), "%d%m%Y%H%M%S")
+    c = len(message.photo)-1
+
+    filename = message.photo[c].file_id
     full_path = config.path+filename+".jpg"
 
-    await message.photo[-1].download(destination_file=full_path)
-
+    await message.photo[c].download(destination_file=full_path)
     await sender(full_path)
-    
+
     os.remove(full_path)
 
 
