@@ -8,7 +8,7 @@ from load import dp, bot, config
 from dcbot import bot as dbot
 
 
-async def sender(photo: str, username: str | None):
+async def sender(photo: str, username: str):
     if username:
         message = f'Отправлено от: {username}'
     else:
@@ -50,6 +50,43 @@ async def photo_sender(message: types.Message):
     await sender(full_path, message.from_user.username)
 
     os.remove(full_path)
+
+
+
+@dp.message_handler(content_types=[ContentType.AUDIO])
+async def audio_sender(message: types.Message):
+    if not os.path.exists(config["Filesystem"]["path"]): os.mkdir(config["Filesystem"]["path"])
+
+    if message.audio:
+
+        filename = message.audio.file_id
+        full_path = config["Filesystem"]["path"] + filename + ".mp3"
+
+        await message.audio.download(destination_file=full_path)   
+
+    await sender(full_path, message.from_user.username)
+    
+    os.remove(full_path)   
+
+
+
+@dp.message_handler(content_types=[ContentType.VOICE])
+async def audio_sender(message: types.Message):
+    if not os.path.exists(config["Filesystem"]["path"]): os.mkdir(config["Filesystem"]["path"])
+
+    if message.voice:
+
+        filename = message.voice.file_id
+        full_path = config["Filesystem"]["path"] + filename + ".ogg"
+
+        await message.voice.download(destination_file=full_path)
+
+    await sender(full_path, message.from_user.username)
+    
+    os.remove(full_path)    
+ 
+
+
 
 @dp.message_handler()
 async def test(message):
