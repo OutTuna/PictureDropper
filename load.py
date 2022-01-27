@@ -2,7 +2,7 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 
-import config
+from config import config
 
 
 loop = asyncio.new_event_loop()
@@ -10,5 +10,5 @@ asyncio.set_event_loop(loop)
 
 
 
-bot = Bot(token=config.token)
+bot = Bot(token=config['Telegram']['token'])
 dp = Dispatcher(bot=bot)

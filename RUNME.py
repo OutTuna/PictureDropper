@@ -2,7 +2,7 @@
 import logging
 
 from dcbot import bot
-from config import discord_settings as settings
+from load import config
 import handlers
 
 
@@ -13,4 +13,4 @@ logging.basicConfig(
 
 
 if __name__ == '__main__':
-    bot.run(settings['token'])
+    bot.run(config['Discord']['token'])

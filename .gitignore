@@ -89,6 +89,8 @@ celerybeat-schedule
 # Environments
 .env
 .venv
+*.ini
+!example_config.ini
 env/
 venv/
 ENV/
