@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 import discord
 from aiogram import types
@@ -8,7 +9,11 @@ from load import dp, bot, config
 from dcbot import bot as dbot
 
 
+<<<<<<< HEAD
 async def sender(photo: str, username: str):
+=======
+async def sender(photo: str, username: Union[str, None]):
+>>>>>>> 1ce27d56a44cc1b9707c1da17cef28926029040b
     if username:
         message = f'Отправлено от: {username}'
     else:
