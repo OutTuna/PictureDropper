@@ -9,7 +9,7 @@ from load import dp, bot, config
 from dcbot import bot as dbot
 
 
-async def sender(photo: str, username: str):
+async def sender(photo: str, username: Union[str, None]):
     if username:
         message = f'Отправлено от: {username}'
     else:
