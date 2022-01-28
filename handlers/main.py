@@ -34,7 +34,7 @@ async def photo_sender(message: types.Message):
     os.remove(full_path)
 
 @dp.message_handler(content_types=[ContentType.VIDEO, ContentType.ANIMATION] )
-async def photo_sender(message: types.Message):
+async def video_sender(message: types.Message):
     if not os.path.exists(config["Filesystem"]["path"]): os.mkdir(config["Filesystem"]["path"])
     
     if message.video:
@@ -54,37 +54,24 @@ async def photo_sender(message: types.Message):
 
 
 
-@dp.message_handler(content_types=[ContentType.AUDIO])
+@dp.message_handler(content_types=[ContentType.AUDIO, ContentType.VOICE])
 async def audio_sender(message: types.Message):
     if not os.path.exists(config["Filesystem"]["path"]): os.mkdir(config["Filesystem"]["path"])
 
     if message.audio:
-
         filename = message.audio.file_id
         full_path = config["Filesystem"]["path"] + filename + ".mp3"
 
-        await message.audio.download(destination_file=full_path)   
+        await message.audio.download(destination_file=full_path)
+    else:
+        filename = message.voice.file_id
+        full_path = config["Filesystem"]["path"] + filename + ".ogg"
+
+        await message.voice.download(destination_file=full_path)  
 
     await sender(full_path, message.from_user.username)
     
     os.remove(full_path)   
-
-
-
-@dp.message_handler(content_types=[ContentType.VOICE])
-async def audio_sender(message: types.Message):
-    if not os.path.exists(config["Filesystem"]["path"]): os.mkdir(config["Filesystem"]["path"])
-
-    if message.voice:
-
-        filename = message.voice.file_id
-        full_path = config["Filesystem"]["path"] + filename + ".ogg"
-
-        await message.voice.download(destination_file=full_path)
-
-    await sender(full_path, message.from_user.username)
-    
-    os.remove(full_path)    
  
 
 
